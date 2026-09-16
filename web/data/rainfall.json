@@ -1,0 +1,166 @@
+{
+  "station": {
+    "id": 53530,
+    "name": "Hörby A",
+    "longitude": 13.6673,
+    "latitude": 55.8624
+  },
+  "parameter": "Daily precipitation, 24-hour sum ending at 06:00 UTC",
+  "source": "https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/5/station/53530/period/corrected-archive/data.csv",
+  "retrieved_at": "2026-09-16T10:56:15.169834+00:00",
+  "archive_sha256": "e0755c1ad8ffb01e67aeb0e1cd771b9e22a8d05ff383a2c0772979e5689c5514",
+  "qualityCodes": {
+    "G": "Checked and approved",
+    "Y": "Suspect or aggregated"
+  },
+  "note": "Dates are SMHI representative days, not midnight-to-midnight totals. Intervals are retained in the table. Station rainfall is not catchment-average rainfall and does not establish flood depth.",
+  "records": [
+    {
+      "date": "2023-11-01",
+      "fromUTC": "2023-11-01 06:00:01",
+      "toUTC": "2023-11-02 06:00:00",
+      "mm": 0.4,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-02",
+      "fromUTC": "2023-11-02 06:00:01",
+      "toUTC": "2023-11-03 06:00:00",
+      "mm": 5.2,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-03",
+      "fromUTC": "2023-11-03 06:00:01",
+      "toUTC": "2023-11-04 06:00:00",
+      "mm": 0.0,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-04",
+      "fromUTC": "2023-11-04 06:00:01",
+      "toUTC": "2023-11-05 06:00:00",
+      "mm": 0.0,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-05",
+      "fromUTC": "2023-11-05 06:00:01",
+      "toUTC": "2023-11-06 06:00:00",
+      "mm": 1.8,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-06",
+      "fromUTC": "2023-11-06 06:00:01",
+      "toUTC": "2023-11-07 06:00:00",
+      "mm": 1.1,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-07",
+      "fromUTC": "2023-11-07 06:00:01",
+      "toUTC": "2023-11-08 06:00:00",
+      "mm": 2.4,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-08",
+      "fromUTC": "2023-11-08 06:00:01",
+      "toUTC": "2023-11-09 06:00:00",
+      "mm": 5.8,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-09",
+      "fromUTC": "2023-11-09 06:00:01",
+      "toUTC": "2023-11-10 06:00:00",
+      "mm": 4.4,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-10",
+      "fromUTC": "2023-11-10 06:00:01",
+      "toUTC": "2023-11-11 06:00:00",
+      "mm": 0.9,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-11",
+      "fromUTC": "2023-11-11 06:00:01",
+      "toUTC": "2023-11-12 06:00:00",
+      "mm": 0.0,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-12",
+      "fromUTC": "2023-11-12 06:00:01",
+      "toUTC": "2023-11-13 06:00:00",
+      "mm": 0.2,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-13",
+      "fromUTC": "2023-11-13 06:00:01",
+      "toUTC": "2023-11-14 06:00:00",
+      "mm": 1.1,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-14",
+      "fromUTC": "2023-11-14 06:00:01",
+      "toUTC": "2023-11-15 06:00:00",
+      "mm": 2.6,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-15",
+      "fromUTC": "2023-11-15 06:00:01",
+      "toUTC": "2023-11-16 06:00:00",
+      "mm": 13.6,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-16",
+      "fromUTC": "2023-11-16 06:00:01",
+      "toUTC": "2023-11-17 06:00:00",
+      "mm": 36.9,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-17",
+      "fromUTC": "2023-11-17 06:00:01",
+      "toUTC": "2023-11-18 06:00:00",
+      "mm": 1.1,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-18",
+      "fromUTC": "2023-11-18 06:00:01",
+      "toUTC": "2023-11-19 06:00:00",
+      "mm": 0.0,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-19",
+      "fromUTC": "2023-11-19 06:00:01",
+      "toUTC": "2023-11-20 06:00:00",
+      "mm": 0.6,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-20",
+      "fromUTC": "2023-11-20 06:00:01",
+      "toUTC": "2023-11-21 06:00:00",
+      "mm": 0.0,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-21",
+      "fromUTC": "2023-11-21 06:00:01",
+      "toUTC": "2023-11-22 06:00:00",
+      "mm": 0.0,
+      "quality": "G"
+    }
+  ]
+}

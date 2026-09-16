@@ -1,0 +1,8 @@
+{
+  "name": "hna-horby-event-explorer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"build": "node scripts/build.mjs", "serve": "python3 -m http.server 8080 --directory dist"},
+  "dependencies": {"cesium": "1.133.0"}
+}

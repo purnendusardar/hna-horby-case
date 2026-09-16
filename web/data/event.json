@@ -1,0 +1,22 @@
+{
+  "id": "horby-2023-11",
+  "title": "Hörbyån flood · November 2023",
+  "municipality": "Hörby",
+  "hazard": "River flooding following rainfall",
+  "source": "https://www.krisinformation.se/nyheter/2023/november/oversvamning-i-horby/",
+  "sourceName": "Krisinformation · information from Hörby municipality",
+  "checked": "2026-09-16",
+  "summary": "The official notice reported flooding on parts of Ågatan and Tvärgatan near Skattkistans preschool. Drivers were advised to use alternative routes.",
+  "spatialCaveat": "Street locations are matched to current OpenStreetMap geometry. The report does not delineate the flooded sections; markers locate the named streets, not surveyed flood boundaries.",
+  "timeline": [
+    {"date":"2023-11-17","label":"Flood reported","text":"Parts of Ågatan and Tvärgatan were reported submerged. Drivers were advised to choose alternative routes. A peak was expected on Saturday; this was a forecast, not a measured peak."},
+    {"date":"2023-11-18","label":"Water receding","text":"The municipality reported some recession at 15:42. Barriers were expected to handle additional rainfall. Exact road reopening times were not given."},
+    {"date":"2023-11-19","label":"Recovery update","text":"The 16:00 update reported substantial overnight recession and warned of loose manhole covers and uneven ground. It did not provide a verified all-clear for individual roads."}
+  ],
+  "locations": [
+    {"id":"agatan","name":"Ågatan","geometryIds":["163989546","300881193","1122597108"],"representativeWay":"1122597108","status":"Documented impact · street level","evidence":"The official 17 November notice names parts of Ågatan as submerged near Skattkistans preschool.","nextStep":"Locate the affected section and confirm drainage condition, closure duration and access requirements with the municipality."},
+    {"id":"tvargatan","name":"Tvärgatan","geometryIds":["300881162","376010756","86006032","86006068"],"representativeWay":"300881162","status":"Documented impact · street level","evidence":"The official 17 November notice names parts of Tvärgatan as submerged near Skattkistans preschool.","nextStep":"Confirm the flooded section and whether local access depended on this road before proposing diversions or protection measures."}
+  ],
+  "gaps": ["Observed flood extent and water depths", "Event-specific river gauge series", "Exact affected road sections and closure times", "Verified diversion routes and traffic volumes", "High-resolution terrain and drainage data for hydraulic modelling"],
+  "analysisStatus": "Historical evidence explorer. No hydraulic simulation or validated HNI score is included."
+}
