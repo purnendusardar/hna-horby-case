@@ -1,0 +1,349 @@
+{
+  "source": "Naturvårdsverket NMD2023 basskikt v2.1",
+  "source_url": "https://geodata.naturvardsverket.se/nedladdning/marktacke/NMD2023/Basskikt_v2_x/NMD2023_basskikt_v2_1.zip",
+  "class_legend_source": "NMD2023bas_v2_1.tif.vat.dbf, read via OGR 2026-09-17",
+  "license": "CC0",
+  "pixel_size_m2": 99.93862015561282,
+  "sealed_pct": 28.6,
+  "pervious_pct": 70.7,
+  "water_pct": 0.7,
+  "nodata_pct": 0.0,
+  "classes": [
+    {
+      "value": 3,
+      "name": "Åkermark",
+      "kind": "pervious",
+      "rationale": "Arable land",
+      "pixel_count": 10807,
+      "area_m2": 1080036.7
+    },
+    {
+      "value": 53,
+      "name": "Väg eller järnväg",
+      "kind": "sealed",
+      "rationale": "Road or railway",
+      "pixel_count": 8495,
+      "area_m2": 848978.6
+    },
+    {
+      "value": 116,
+      "name": "Ädellövskog på fastmark",
+      "kind": "pervious",
+      "rationale": "Noble broadleaf forest, dry land",
+      "pixel_count": 8336,
+      "area_m2": 833088.3
+    },
+    {
+      "value": 51,
+      "name": "Byggnad",
+      "kind": "sealed",
+      "rationale": "Building footprint",
+      "pixel_count": 7182,
+      "area_m2": 717759.2
+    },
+    {
+      "value": 52,
+      "name": "Anlagd mark, ej byggnad eller väg/järnväg",
+      "kind": "sealed",
+      "rationale": "ASSUMED sealed — see module docstring, genuinely mixed (gravel/sports pitch/etc.)",
+      "pixel_count": 6769,
+      "area_m2": 676484.5
+    },
+    {
+      "value": 4233,
+      "name": "Frisk-fuktig gräsdominerad mark",
+      "kind": "pervious",
+      "rationale": "Fresh-moist grass-dominated land",
+      "pixel_count": 6558,
+      "area_m2": 655397.5
+    },
+    {
+      "value": 4232,
+      "name": "Frisk gräsdominerad mark",
+      "kind": "pervious",
+      "rationale": "Fresh grass-dominated land",
+      "pixel_count": 6135,
+      "area_m2": 613123.4
+    },
+    {
+      "value": 115,
+      "name": "Triviallövskog på fastmark",
+      "kind": "pervious",
+      "rationale": "Common broadleaf forest, dry land",
+      "pixel_count": 4035,
+      "area_m2": 403252.3
+    },
+    {
+      "value": 4223,
+      "name": "Frisk-fuktig risdominerad mark",
+      "kind": "pervious",
+      "rationale": "Fresh-moist dwarf-shrub dominated land",
+      "pixel_count": 2654,
+      "area_m2": 265237.1
+    },
+    {
+      "value": 4222,
+      "name": "Frisk risdominerad mark",
+      "kind": "pervious",
+      "rationale": "Fresh dwarf-shrub dominated land",
+      "pixel_count": 2626,
+      "area_m2": 262438.8
+    },
+    {
+      "value": 114,
+      "name": "Lövblandad barrskog på fastmark",
+      "kind": "pervious",
+      "rationale": "Broadleaf-mixed conifer forest, dry land",
+      "pixel_count": 2438,
+      "area_m2": 243650.4
+    },
+    {
+      "value": 117,
+      "name": "Triviallövskog med ädellövinslag på fastmark",
+      "kind": "pervious",
+      "rationale": "Common broadleaf forest with noble broadleaf, dry land",
+      "pixel_count": 2167,
+      "area_m2": 216567.0
+    },
+    {
+      "value": 4212,
+      "name": "Frisk buskdominerad mark",
+      "kind": "pervious",
+      "rationale": "Fresh (mesic) shrub-dominated land",
+      "pixel_count": 1984,
+      "area_m2": 198278.2
+    },
+    {
+      "value": 4213,
+      "name": "Frisk-fuktig buskdominerad mark",
+      "kind": "pervious",
+      "rationale": "Fresh-moist shrub-dominated land",
+      "pixel_count": 1859,
+      "area_m2": 185785.9
+    },
+    {
+      "value": 111,
+      "name": "Tallskog på fastmark",
+      "kind": "pervious",
+      "rationale": "Pine forest, dry land",
+      "pixel_count": 1620,
+      "area_m2": 161900.6
+    },
+    {
+      "value": 4231,
+      "name": "Torr gräsdominerad mark",
+      "kind": "pervious",
+      "rationale": "Dry grass-dominated land",
+      "pixel_count": 1257,
+      "area_m2": 125622.8
+    },
+    {
+      "value": 125,
+      "name": "Triviallövskog på våtmark",
+      "kind": "pervious",
+      "rationale": "Common broadleaf forest, wetland",
+      "pixel_count": 755,
+      "area_m2": 75453.7
+    },
+    {
+      "value": 4221,
+      "name": "Torr risdominerad mark",
+      "kind": "pervious",
+      "rationale": "Dry dwarf-shrub dominated land",
+      "pixel_count": 593,
+      "area_m2": 59263.6
+    },
+    {
+      "value": 61,
+      "name": "Inlandsvatten",
+      "kind": "water",
+      "rationale": "Inland water — excluded from sealed/pervious split",
+      "pixel_count": 538,
+      "area_m2": 53767.0
+    },
+    {
+      "value": 4211,
+      "name": "Torr buskdominerad mark",
+      "kind": "pervious",
+      "rationale": "Dry shrub-dominated land",
+      "pixel_count": 519,
+      "area_m2": 51868.1
+    },
+    {
+      "value": 200,
+      "name": "Öppen våtmark (underindelning saknas)",
+      "kind": "pervious",
+      "rationale": "Open wetland, unsubdivided",
+      "pixel_count": 317,
+      "area_m2": 31680.5
+    },
+    {
+      "value": 411,
+      "name": "Öppen fastmark utan vegetation (ej glaciär eller varaktigt snöfält)",
+      "kind": "pervious",
+      "rationale": "ASSUMED pervious (bare soil vs. exposed bedrock ambiguous) — see module docstring",
+      "pixel_count": 203,
+      "area_m2": 20287.5
+    },
+    {
+      "value": 223,
+      "name": "Gräsdominerad våtmark, mager",
+      "kind": "pervious",
+      "rationale": "Grass-dominated wetland, nutrient-poor",
+      "pixel_count": 88,
+      "area_m2": 8794.6
+    },
+    {
+      "value": 113,
+      "name": "Barrblandskog på fastmark",
+      "kind": "pervious",
+      "rationale": "Mixed conifer forest, dry land",
+      "pixel_count": 54,
+      "area_m2": 5396.7
+    },
+    {
+      "value": 213,
+      "name": "Fastmattemyr, mager",
+      "kind": "pervious",
+      "rationale": "Firm-carpet mire, nutrient-poor",
+      "pixel_count": 47,
+      "area_m2": 4697.1
+    },
+    {
+      "value": 224,
+      "name": "Gräsdominerad våtmark, frodvuxen",
+      "kind": "pervious",
+      "rationale": "Grass-dominated wetland, lush",
+      "pixel_count": 47,
+      "area_m2": 4697.1
+    },
+    {
+      "value": 225,
+      "name": "Gräsdominerad våtmark, högvuxen",
+      "kind": "pervious",
+      "rationale": "Grass-dominated wetland, tall-growing",
+      "pixel_count": 46,
+      "area_m2": 4597.2
+    },
+    {
+      "value": 221,
+      "name": "Våtmark med buskar",
+      "kind": "pervious",
+      "rationale": "Wetland with shrubs",
+      "pixel_count": 37,
+      "area_m2": 3697.7
+    },
+    {
+      "value": 118,
+      "name": "Temporärt ej skog på fastmark",
+      "kind": "pervious",
+      "rationale": "Temporarily unforested, dry land (e.g. recently felled)",
+      "pixel_count": 35,
+      "area_m2": 3497.9
+    },
+    {
+      "value": 112,
+      "name": "Granskog på fastmark",
+      "kind": "pervious",
+      "rationale": "Spruce forest, dry land",
+      "pixel_count": 33,
+      "area_m2": 3298.0
+    },
+    {
+      "value": 124,
+      "name": "Lövblandad barrskog på våtmark",
+      "kind": "pervious",
+      "rationale": "Broadleaf-mixed conifer forest, wetland",
+      "pixel_count": 29,
+      "area_m2": 2898.2
+    },
+    {
+      "value": 121,
+      "name": "Tallskog på våtmark",
+      "kind": "pervious",
+      "rationale": "Pine forest, wetland",
+      "pixel_count": 28,
+      "area_m2": 2798.3
+    },
+    {
+      "value": 214,
+      "name": "Fastmattemyr, frodig",
+      "kind": "pervious",
+      "rationale": "Firm-carpet mire, lush",
+      "pixel_count": 25,
+      "area_m2": 2498.5
+    },
+    {
+      "value": 127,
+      "name": "Triviallövskog med ädellövinslag på våtmark",
+      "kind": "pervious",
+      "rationale": "Common broadleaf forest with noble broadleaf, wetland",
+      "pixel_count": 15,
+      "area_m2": 1499.1
+    },
+    {
+      "value": 128,
+      "name": "Temporärt ej skog på våtmark",
+      "kind": "pervious",
+      "rationale": "Temporarily unforested, wetland",
+      "pixel_count": 7,
+      "area_m2": 699.6
+    },
+    {
+      "value": 211,
+      "name": "Buskmyr",
+      "kind": "pervious",
+      "rationale": "Shrub-dominated mire",
+      "pixel_count": 4,
+      "area_m2": 399.8
+    },
+    {
+      "value": 227,
+      "name": "Våtmark utan växttäcke",
+      "kind": "pervious",
+      "rationale": "Wetland without vegetation cover",
+      "pixel_count": 3,
+      "area_m2": 299.8
+    },
+    {
+      "value": 226,
+      "name": "Mossdominerad våtmark",
+      "kind": "pervious",
+      "rationale": "Moss-dominated wetland",
+      "pixel_count": 2,
+      "area_m2": 199.9
+    },
+    {
+      "value": 123,
+      "name": "Barrblandskog på våtmark",
+      "kind": "pervious",
+      "rationale": "Mixed conifer forest, wetland",
+      "pixel_count": 1,
+      "area_m2": 99.9
+    },
+    {
+      "value": 126,
+      "name": "Ädellövskog på våtmark",
+      "kind": "pervious",
+      "rationale": "Noble broadleaf forest, wetland",
+      "pixel_count": 1,
+      "area_m2": 99.9
+    },
+    {
+      "value": 216,
+      "name": "Mjukmattemyr",
+      "kind": "pervious",
+      "rationale": "Soft-carpet mire",
+      "pixel_count": 1,
+      "area_m2": 99.9
+    },
+    {
+      "value": 217,
+      "name": "Lösbottenmyr",
+      "kind": "pervious",
+      "rationale": "Loose-bottom mire",
+      "pixel_count": 1,
+      "area_m2": 99.9
+    }
+  ]
+}

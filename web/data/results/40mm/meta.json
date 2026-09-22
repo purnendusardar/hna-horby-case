@@ -1,0 +1,88 @@
+{
+ "run": "final_aoi_5m_40mm",
+ "storm_mm": 40,
+ "crs": "EPSG:4326",
+ "bounds_west_south_east_north": [
+  13.638763998212639,
+  55.83942366864613,
+  13.685873083677583,
+  55.865526944121314
+ ],
+ "png_size_px": [
+  1178,
+  1163
+ ],
+ "transparent_below_m": 0.05,
+ "classes": [
+  {
+   "from_m": 0.05,
+   "to_m": 0.1,
+   "rgba": [
+    173,
+    216,
+    230,
+    210
+   ],
+   "label": "0.05-0.10 m"
+  },
+  {
+   "from_m": 0.1,
+   "to_m": 0.3,
+   "rgba": [
+    107,
+    174,
+    214,
+    225
+   ],
+   "label": "0.10-0.30 m"
+  },
+  {
+   "from_m": 0.3,
+   "to_m": 0.5,
+   "rgba": [
+    33,
+    113,
+    181,
+    235
+   ],
+   "label": "0.30-0.50 m"
+  },
+  {
+   "from_m": 0.5,
+   "to_m": null,
+   "rgba": [
+    8,
+    48,
+    107,
+    245
+   ],
+   "label": "> 0.50 m"
+  }
+ ],
+ "classes_note": "Display intervals are project-defined, not standards. Burned-channel cells are excluded from these classes and shown as the separate river layer below.",
+ "river_layer": {
+  "rgba": [
+   8,
+   126,
+   131,
+   255
+  ],
+  "outline_rgba": [
+   4,
+   61,
+   64,
+   255
+  ],
+  "label": "River (permanent channel, not depth-classified)"
+ },
+ "source_grid_epsg3006": {
+  "cell_m": 5.0,
+  "origin_x": 414810.0,
+  "origin_y_top": 6191895.0,
+  "shape": [
+   570,
+   579
+  ]
+ },
+ "placeholders": "computed event inflow hydrographs (still a numerical demonstration, not a forecast); SCS effective rain from one uniform CN; not a flood hazard map"
+}

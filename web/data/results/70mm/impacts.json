@@ -1,0 +1,113 @@
+{
+ "run": "final_aoi_5m_70mm",
+ "storm_mm": 70,
+ "summary": {
+  "sim_hours": 36.0,
+  "effective_rain_mm": 28.9,
+  "storm_mm": 70,
+  "boundary": "free outflow (FREE, local slope)",
+  "inflow": {
+   "type": "event hydrograph (SCS-CN + SCS UH + station-2128 baseflow)",
+   "peak_m3s": {
+    "east inflow (Hörbyån mainstem)": 78.527,
+    "south inflow (southern arm)": 68.071
+   }
+  },
+  "area_stats_basis": "street-surface depth (unconditioned ground), channel mask + 1-cell buffer and building-raised cells excluded from the domain before these areas are computed",
+  "wet_area_gt_0p05_km2": 0.815,
+  "area_gt_0p3_km2": 0.321,
+  "area_gt_0p5_km2": 0.208,
+  "area_stats_old_basis_reference_only": {
+   "note": "OLD basis (raw LISFLOOD depth above conditioned ground, whole domain incl. channel+buildings) — kept for the ASSUMPTIONS.md before/after record only",
+   "wet_area_gt_0p05_km2": 0.972,
+   "area_gt_0p3_km2": 0.458,
+   "area_gt_0p5_km2": 0.334
+  },
+  "domain_km2": 8.25,
+  "max_depth_m": 4.87,
+  "cell_m": 5.0
+ },
+ "note": "Published statistics are project-defined (2026-09-22 depth-plausibility gate): street_surface_p90_m = 90th percentile of street-surface depth over the footprint (channel mask + 1-cell buffer and building-raised cells excluded); wetted_fraction = share of those remaining cells deeper than 0.05 m. street_max_m_reference_only is kept for reference but not displayed. fly_to_* is the footprint CENTROID, not the deepest cell (which may sit in the channel). Skattkistans förskola resolved via horby.se (Ågatan 2B); street-level geocode, see data/scenario/landmarks.json",
+ "locations": [
+  {
+   "location": "Ågatan",
+   "group": "Ågatan",
+   "street_surface_p90_m": 1.161,
+   "wetted_fraction": 0.762,
+   "exceeds_0p05_m": true,
+   "street_max_m_reference_only": 1.312,
+   "time_of_max_h": 15.4,
+   "cells_in_footprint": 371,
+   "cells_used_after_exclusions": 307,
+   "channel_or_building_excluded_cells": 64,
+   "fly_to_epsg3006": [
+    415645,
+    6190150
+   ],
+   "fly_to_lonlat": [
+    13.65265,
+    55.8495
+   ]
+  },
+  {
+   "location": "Tvärgatan",
+   "group": "Tvärgatan",
+   "street_surface_p90_m": 0.578,
+   "wetted_fraction": 0.471,
+   "exceeds_0p05_m": true,
+   "street_max_m_reference_only": 1.276,
+   "time_of_max_h": 15.4,
+   "cells_in_footprint": 1631,
+   "cells_used_after_exclusions": 1388,
+   "channel_or_building_excluded_cells": 243,
+   "fly_to_epsg3006": [
+    416147,
+    6189951
+   ],
+   "fly_to_lonlat": [
+    13.66072,
+    55.8478
+   ]
+  },
+  {
+   "location": "ICA car park",
+   "group": "ICA car park",
+   "street_surface_p90_m": 1.17,
+   "wetted_fraction": 0.6,
+   "exceeds_0p05_m": true,
+   "street_max_m_reference_only": 1.518,
+   "time_of_max_h": 15.42,
+   "cells_in_footprint": 538,
+   "cells_used_after_exclusions": 488,
+   "channel_or_building_excluded_cells": 50,
+   "fly_to_epsg3006": [
+    415380,
+    6190183
+   ],
+   "fly_to_lonlat": [
+    13.64841,
+    55.84974
+   ]
+  },
+  {
+   "location": "Skattkistans förskola",
+   "group": "Skattkistans förskola",
+   "street_surface_p90_m": 1.276,
+   "wetted_fraction": 1.0,
+   "exceeds_0p05_m": true,
+   "street_max_m_reference_only": 1.312,
+   "time_of_max_h": 15.4,
+   "cells_in_footprint": 49,
+   "cells_used_after_exclusions": 39,
+   "channel_or_building_excluded_cells": 10,
+   "fly_to_epsg3006": [
+    415642,
+    6190038
+   ],
+   "fly_to_lonlat": [
+    13.65264,
+    55.84849
+   ]
+  }
+ ]
+}

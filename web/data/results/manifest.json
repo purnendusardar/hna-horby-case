@@ -1,0 +1,19 @@
+{
+ "scenarios": [
+  {
+   "key": "100mm",
+   "storm_mm": 100,
+   "run": "final_aoi_5m_100mm"
+  },
+  {
+   "key": "40mm",
+   "storm_mm": 40,
+   "run": "final_aoi_5m_40mm"
+  },
+  {
+   "key": "70mm",
+   "storm_mm": 70,
+   "run": "final_aoi_5m_70mm"
+  }
+ ]
+}

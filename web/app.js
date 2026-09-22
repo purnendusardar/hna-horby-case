@@ -4,7 +4,7 @@ let viewer,event,geo,rain,selected,topDown=false;
 const groups={roads:[],river:[],impacts:[],station:[]};
 const load=async path=>{const r=await fetch(path);if(!r.ok)throw new Error(`${path}: ${r.status}`);return r.json()};
 function errorMap(message){$('map-error').hidden=false;$('map-error').textContent=message;}
-function fly(lon=13.6547,lat=55.8491,range=1900){if(!viewer)return;const C=Cesium;viewer.camera.flyToBoundingSphere(new C.BoundingSphere(C.Cartesian3.fromDegrees(lon,lat,80),10),{duration:1.2,offset:new C.HeadingPitchRange(0,C.Math.toRadians(topDown?-90:-48),range)});}
+function fly(lon=13.6547,lat=55.8491,range=1900){if(!viewer)return;const C=Cesium;viewer.camera.cancelFlight();viewer.camera.flyToBoundingSphere(new C.BoundingSphere(C.Cartesian3.fromDegrees(lon,lat,80),10),{duration:1.2,offset:new C.HeadingPitchRange(0,C.Math.toRadians(topDown?-90:-48),range)});}
 function streetCoords(loc){const f=geo.features.find(f=>f.id===loc.representativeWay);return f.geometry.coordinates[Math.floor(f.geometry.coordinates.length/2)];}
 function selectLocation(id,move=true){selected=event.locations.find(l=>l.id===id);if(!selected)return;
  $('selected-name').textContent=selected.name;$('selected-status').textContent=selected.status;$('selected-evidence').textContent=selected.evidence;$('next-step').textContent=selected.nextStep;

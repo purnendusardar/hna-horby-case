@@ -1,0 +1,415 @@
+# Scenario explorer — every assumed/configurable value used by the pipeline,
+# with a source note (brief section 1: "Every assumed value must live in one
+# config file... so values can be changed and the pipeline rerun.")
+#
+# Phase 1 status: storm shape, default drainage capacity, and the
+# literature-constant sections (manning_n, terrain_conditioning) are
+# populated. infiltration.soils and inflow.subcatchments are fetched (SGU,
+# SMHI SVAR — no account needed for either). infiltration.land_cover (NMD)
+# is blocked on a genuine no-clip-API problem, not an account (see
+# ASSUMPTIONS.md). inflow.baseflow_shype is pending. Nothing here is
+# hard-coded as "zero" for what hasn't been decided or found yet — see each
+# section's own status/note fields.
+#
+# NOTE: scripts/scenario_fetch_buildings.py currently hardcodes the values
+# under buildings.height_fallback rather than reading this file (the rest of
+# this repo's Python scripts use only the standard library, so this file
+# isn't wired up as machine-readable config yet). Keep the two in sync by
+# hand until a Phase 1+ loader is added, and note any drift here.
+
+phase: 1
+
+terrain:
+  placeholder_source: esri_world_elevation
+  placeholder_source_url: https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer
+  placeholder_note: >
+    Case 01 already streams this as visualization context (see root
+    README.md, "Scientific interpretation"). Reused here as the Phase 0
+    terrain provider because the target source below needs an account this
+    environment does not have.
+  target_source: lantmateriet_markhohjdmodell_grid1
+  target_source_url: https://api.lantmateriet.se/stac-hojd/v1
+  target_license: CC BY 4.0 — account required
+  target_note: >
+    1 m grid, heights in RH 2000 (normal heights). Must be converted to
+    ellipsoidal heights via the SWEN17_RH2000 geoid before use in Cesium
+    (brief section 5); the water mesh in a later phase must use the same
+    conversion or it will not align with the terrain. See
+    scripts/scenario_fetch_terrain.py for the planned fetch/convert/tile
+    steps — not run yet.
+
+buildings:
+  footprint_source: openstreetmap
+  footprint_source_url: https://overpass-api.de/api/interpreter
+  footprint_license: ODbL 1.0
+  footprint_note: >
+    Fetched by scripts/scenario_fetch_buildings.py, same Overpass bbox as
+    scripts/fetch_geography.py. Only closed ways tagged building=* are
+    included; multipolygon building relations are skipped (documented
+    limitation, see that script's docstring).
+  target_source: lantmateriet_byggnad_vektor
+  target_license: CC BY 4.0 — ordering involves a legal review step
+  target_height_method: >
+    90th percentile of lidar class-1 point heights per footprint, minus
+    ground height from the 1 m DEM (brief section 3). Fallback if lidar
+    access is slow: GlobalBuildingAtlas LoD1 (Zhu et al. 2025), with the
+    choice recorded here.
+  height_fallback:
+    method: osm_height_tag_then_levels_then_default_by_type
+    level_height_m: 3.0
+    source_note: >
+      No lidar or Lantmäteriet footprints yet. Height is read from OSM
+      height=* if present, else building:levels=* × 3.0 m, else a default
+      storey count per OSM building tag (see
+      DEFAULT_LEVELS_BY_BUILDING_TAG in scripts/scenario_fetch_buildings.py).
+      These are placeholder heights, not measurements — every feature in
+      web/data/scenario_buildings.geojson carries a height_method property
+      recording which rule produced it, so the UI/assumptions panel can
+      surface this per building rather than hide it.
+    known_bad_default: >
+      building=church defaults to 8 m (nave height), which is not
+      representative of e.g. a spire. Low occurrence in the AOI; revisit if
+      a church ends up in the impact-summary "named places reached" list
+      (Phase 3).
+
+storm:
+  method: alternating_block  # NOT the closed-form Chicago/Keifer-Chu formula — see deviation note below
+  duration_h: 24
+  block_min: 10
+  peak_r: 0.4
+  totals_mm: [40, 70, 100]
+  shape_return_period_months: 24  # assumption for shaping the curve only — see idf_note
+  idf_formula: dahlstrom_project_specified
+  idf_formula_text: "i(T_R,Å) = 190 * Å^(1/3) * ln(T_R) / T_R^0.98 + 2  [l/(s*ha)], T_R in minutes, Å in MONTHS"
+  idf_source: Specified directly for this project (supersedes an earlier, differently-shaped formula this file used)
+  idf_verified: true
+  idf_verified_note: >
+    Confirmed by tests/test_scenario_generate_hyetographs.py::test_worked_example
+    against the one worked example given for this formula (Å=24, T_R=10 ->
+    ~134 l/s*ha) — i.e. the code matches the formula as specified. That is
+    not the same as the formula being checked against a primary literature
+    source (e.g. P104); no such citation has been given for this exact form
+    (with the ∛Å, T_R^0.98 exponent, and +2 offset) and none is recorded here.
+  idf_note: >
+    Replaces an earlier "commonly cited Dahlström formula" whose computed
+    drainage capacity (15.95 mm/h) fell outside the brief's own rough
+    estimate ("roughly 20-25 mm/h", section 4.2). This formula's capacity
+    output (see drainage.default_capacity_mm_h) falls inside that range.
+  shape_return_period_note: >
+    The brief fixes rainfall TOTALS (40/70/100 mm), not a return period for
+    the design storm itself. This formula's "+2" offset is not proportional
+    to Å, so — unlike the previous formula, where Å cancelled out entirely
+    once rescaled to a fixed total — the choice of Å has a small effect on
+    the final (rescaled) hyetograph shape, mostly at the low-intensity tail
+    blocks. 24 months (2 years) is used here to match the drainage capacity
+    reference below; this is a recorded assumption, not a brief value.
+  method_deviation_note: >
+    The brief specifies a Chicago Design Storm. The classic closed-form
+    Chicago hyetograph (Keifer & Chu 1957) needs an IDF of the form
+    i = a/(t+b)^c with b != 0 to avoid a singularity at the peak; this
+    formula's ln(T_R) term has the same T_R=0 singularity. Used the
+    discretised alternating block method instead (10-minute minimum block,
+    so the singularity is never evaluated) — the standard practical
+    substitute, same "single peak at r=0.4, IDF-shaped falloff either side"
+    result. Generated by scripts/scenario_generate_hyetographs.py; plots and
+    per-block CSVs in docs/hyetographs/.
+  generated_2026-09-17:
+    "40mm": {peak_block: 58, peak_block_start_min: 570, peak_intensity_mm_h: 42.98}
+    "70mm": {peak_block: 58, peak_block_start_min: 570, peak_intensity_mm_h: 75.22}
+    "100mm": {peak_block: 58, peak_block_start_min: 570, peak_intensity_mm_h: 107.46}
+
+drainage:
+  default_capacity_source: >
+    Svenskt Vatten P110 minimum return periods (brief section 4.2): pipe-full
+    capacity = a 2-year rain at a 30-minute concentration time, computed
+    (not hard-coded) from the same IDF formula as the storm shape above.
+  default_capacity_return_period_months: 24
+  default_capacity_concentration_time_min: 30
+  default_capacity_lps_ha: 68.51
+  default_capacity_mm_h: 24.66
+  default_capacity_note: >
+    Computed by scripts/scenario_generate_hyetographs.py using the corrected
+    IDF formula (see storm.idf_formula_text above). Falls inside the brief's
+    own rough estimate ("roughly 20-25 mm/h", section 4.2) — the earlier
+    formula's 15.95 mm/h did not, which is why the formula was corrected.
+    Mismatch flag cleared; still subject to storm.idf_verified_note (this
+    confirms the code matches the specified formula, not that the formula
+    itself traces to a primary literature source).
+  half_blocked_multiplier: 0.5
+  half_blocked_source: brief section 4.2, stated directly, not independently sourced
+  submerged_outlet_hand_threshold_m: 1.5
+  submerged_outlet_note: >
+    HAND (height above nearest drainage) below this threshold near the river
+    sets capacity to 0, representing outlets drowned by the high river.
+    Value as specified in brief section 4.2; not independently sourced.
+    Needs a DEM-derived HAND raster to apply, which needs the Phase 0
+    terrain blocker (Lantmäteriet DEM) resolved first.
+
+infiltration:
+  method: scs_curve_number  # brief section 4.3, TR-55 — not yet computed, only the two inputs below are fetched
+  antecedent_moisture_condition: AMC_III  # brief section 4.3: "wet antecedent conditions to match a November storm"
+  soils:
+    source: SGU Jordarter 25k-100k, collection grundlager
+    source_url: https://api.sgu.se/oppnadata/jordarter25k-100k/ogc/features/v1/collections/grundlager/items?bbox=13.64,55.84,13.685,55.865&f=json
+    license: CC0
+    downloaded: 2026-09-17
+    output: web/data/scenario_soils.geojson
+    hydrologic_group_lookup: SOIL_TO_HYDROLOGIC_GROUP in scripts/scenario_fetch_soils.py — see ASSUMPTIONS.md for the full table and rationale
+    note: >
+      Fetched, not yet combined with land cover into a Curve Number grid.
+      Bbox-filtered, not clipped — see ASSUMPTIONS.md caveat about the
+      "Vatten" feature before treating this as a per-cell input.
+  land_cover:
+    source: Naturvårdsverket NMD2023 basskikt v2.1
+    source_url: https://geodata.naturvardsverket.se/nedladdning/marktacke/NMD2023/Basskikt_v2_x/NMD2023_basskikt_v2_1.zip
+    license: CC0
+    downloaded: 2026-09-17
+    output: web/data/scenario_landcover.tif, web/data/scenario_landcover_classes.json
+    sealed_pct: 28.6
+    pervious_pct: 70.7
+    water_pct: 0.7
+    processing_tool_note: >
+      pip install gdal failed on this machine (no prebuilt Windows wheel;
+      source build fails in setuptools). Processed instead via the QGIS
+      3.40.4 installation already present (GDAL 3.10.2 via osgeo.gdal/ogr,
+      reached through the qgis-mcp bridge) — a deliberate, documented
+      exception to this repo's stdlib-only Python convention. See
+      scripts/scenario_process_landcover.py.
+    classification_note: >
+      Every one of NMD's 53 classes is assigned sealed/pervious/water in
+      NMD_CLASS_LEGEND, names sourced directly from the dataset's own
+      .tif.vat.dbf sidecar. Two classes (52 "Anlagd mark..." and 411 "Öppen
+      fastmark utan vegetation") needed a real judgement call rather than a
+      clean read of the class name — see ASSUMPTIONS.md for both.
+    raw_data_note: >
+      The 2.7 GB source zip and its extracted GeoTIFF live in scenario_raw/
+      (gitignored, not committed) — kept on disk in case the AOI needs to
+      change without a 2.7 GB re-download; safe to delete if disk space is
+      needed, at the cost of a re-download if land cover is reprocessed.
+
+inflow:
+  method: scs_unit_hydrograph  # brief section 4.4 — not yet computed, only the catchment delineation below is fetched
+  subcatchments:
+    source: SMHI SVAR 2022 Delavrinningsområden (WFS)
+    source_url: "https://opendata-view.smhi.se/SMHI_vatten/wfs?service=WFS&version=2.0.0&request=GetFeature&typenames=SMHI_vatten:Delavrinningsomraden_2022&bbox=55.75,13.45,55.95,13.85,urn:ogc:def:crs:EPSG::4326&outputFormat=application/json&count=500"
+    license: CC BY 4.0 (SMHI general terms — not independently re-confirmed for this specific WFS)
+    downloaded: 2026-09-17
+    output: web/data/scenario_subcatchments.geojson
+    horby_anchor_aro_uuid: 1D0DC07B-F547-41F3-9EEB-C1EDF1461A55
+    total_upstream_area_km2: 151.78
+    upstream_catchment_count: 8
+    note: >
+      Upstream set found by a real breadth-first walk of the MAINDOWN
+      drainage-topology attribute (scripts/scenario_fetch_subcatchments.py),
+      not inferred from geometry. Sum of local AREA over the 8 catchments
+      found matches SVAR's own AREA_UPSTREAM figure on the anchor catchment
+      exactly, confirming the query bbox did not truncate the watershed.
+    anchor_is_not_the_inflow_boundary: >
+      IMPORTANT: the anchor catchment is the wrong place for the brief's
+      §4.4 upstream boundary. Verified 2026-09-18 against the OSM river
+      geometry (see docs/horby_inflow_point_check.png): the anchor "Vid
+      mätstation Hörbyån" lies DOWNSTREAM of the town and mostly OUTSIDE
+      the model AOI — its 151.78 km2 is the area draining past a point below
+      Hörby, not the area entering it. Use boundary_inflows below instead.
+
+  # Where Hörbyån and its tributary actually cross the model AOI boundary.
+  # Derived 2026-09-18 by intersecting the OSM waterway geometry with the
+  # AOI bbox and point-in-polygon testing each crossing against the SVAR
+  # catchments — not assumed.
+  boundary_inflows:
+    - name: Hörbyån mainstem, east edge
+      lat: 55.84823
+      lon: 13.68501
+      osm_way: 77387390
+      svar_catchment: Ebbamölleån
+      upstream_area_km2_svar: 77.61
+      shype_subid: 184
+      upstream_area_km2_shype: 81.60
+      area_agreement_note: >
+        S-HYPE's own upstreamArea for SUBID 184 (81.60 km2) is ~5% larger
+        than SVAR's AREA_UPSTREAM for Ebbamölleån (77.61 km2). Both are used
+        as-is below (aoi_overlap_corrected_km2 subtracts from the SVAR
+        figure only) — not force-reconciled to match; see ASSUMPTIONS.md.
+      aoi_overlap_km2: 0.713
+      aoi_overlap_corrected_km2_svar: 76.90
+    - name: Southern arm (unnamed in OSM), south edge
+      lat: 55.83990
+      lon: 13.66812
+      osm_way: 77387397
+      svar_catchment: Vid mätstation Hörbyån, södra armen
+      upstream_area_km2_svar: 62.22
+      shype_subid: 64474
+      upstream_area_km2_shype: 59.65
+      area_agreement_note: >
+        S-HYPE's own upstreamArea for SUBID 64474 (59.65 km2) is ~4% smaller
+        than SVAR's AREA_UPSTREAM for the södra armen catchment (62.22 km2).
+        Not force-reconciled; see ASSUMPTIONS.md. Nearest-node search alone
+        would have picked SUBID 64473 (108 m from this boundary point, area
+        0 -- it's a headwater sub-piece), not 64474 (627 m away, the actual
+        aggregation point whose own upstreamArea matches the full named
+        catchment) — chosen by area match, not raw proximity.
+      aoi_overlap_km2: 0.232
+      aoi_overlap_corrected_km2_svar: 61.98
+  boundary_outflow:
+    name: Hörbyån leaves the AOI, west edge
+    lat: 55.84508
+    lon: 13.63971
+    svar_catchment: Vid mätstation HEÅKRA
+    upstream_area_km2_at_this_point_svar: 147.49
+    shype_subid: 185
+    upstream_area_km2_shype: 146.67
+    smhi_hydroobs_station: HEÅKRA (id 2128), 55.8449 N 13.6350 E, 0.31 km from this point
+  # Three DIFFERENT quantities, computed 2026-09-18, not reconciled to
+  # agree with each other — see scripts/scenario_compute_aoi_drainage_area.py
+  # and ASSUMPTIONS.md ("Five more follow-ups", #3):
+  aoi_area_quantities:
+    aoi_bbox_area_km2: 7.8399
+    aoi_bbox_area_note: >
+      The modelled rain-on-grid domain's own size (EPSG:3006-projected
+      rectangle, 55.84-55.865 N, 13.64-13.685 E). NOT the area that drains
+      to the outflow — see the next field.
+    aoi_area_draining_to_outflow_km2: 5.962
+    aoi_area_draining_to_outflow_note: >
+      The actual AOI area that drains to the west outflow, per SVAR's own
+      MAINDOWN topology: sum of the overlaps between the AOI bbox and each
+      of the 7 SVAR subcatchments upstream of/at "Vid mätstation HEÅKRA"
+      (Ebbamölleån 0.713, Mynnar i Ebbamölleån 0.000, two unnamed
+      södra-armen feeders 0.000 each, södra armen 0.232, an unnamed
+      HEÅKRA-feeder 0.102, HEÅKRA's own local piece 4.915 km2). 76.0% of
+      the bbox — the remaining ~1.88 km2 of the AOI rectangle drains
+      elsewhere per SVAR's delineation.
+    svar_arithmetic_figure_km2: 7.66  # 147.49 - 139.83
+    svar_arithmetic_figure_note: >
+      SVAR's own outflow-minus-inflows arithmetic. NOT clipped to the AOI
+      bbox shape at all — a third, independently-derived quantity that
+      happens to be numerically close to aoi_bbox_area_km2 (~2.3% apart)
+      but is not the same computation as either field above.
+  boundary_note: >
+    TWO river inflows, not one — they meet at 55.84725, 13.66771 inside the
+    AOI, about 1 km east of the town centre. A single upstream hydrograph
+    would misrepresent the system. Also note the double-counting trap: the
+    brief's method rains on the whole 2D grid AND adds boundary hydrographs,
+    so each hydrograph must represent only the area OUTSIDE the domain.
+    Uncorrected SVAR sum: 77.61 + 62.22 = 139.83 km2. Both boundary_inflow
+    polygons (Ebbamölleån, södra armen) were checked 2026-09-18 for overlap
+    with the AOI bbox and DO overlap it (0.713 and 0.232 km2 respectively,
+    computed in EPSG:3006) — corrected sum = 76.90 + 61.98 = 138.88 km2, not
+    139.83 km2. See aoi_area_quantities above for the AOI-side comparison,
+    and scenario_correct_streamflow_for_aoi.py below for where this overlap
+    is now applied as a scaling factor on each hydrograph, not just an area
+    note.
+  baseflow_shype:
+    source: SMHI S-HYPE via Vattenwebb HydroNu
+    source_url_template: "https://vattenwebb.smhi.se/hydronu/data/point?subid={SUBID}"
+    license: CC BY 4.0 (SMHI general terms — not independently re-confirmed for this endpoint)
+    status: resolved_2026-09-18
+    endpoint_status: >
+      UNDOCUMENTED/reverse-engineered, unsupported. Found by reading
+      HydroNu's own client JS, not a published API — may change or
+      disappear without notice. Mitigated by caching every raw response
+      (web/data/_cache/hydronu/, keyed by request URL) and rate-limiting
+      requests to 1/2s via scripts/_hydronu_cache.py, shared by
+      scripts/scenario_fetch_streamflow.py and
+      scripts/scenario_lookup_subid.py. See ASSUMPTIONS.md.
+    resolution_note: >
+      The "no scriptable lookup" blocker below is superseded: reading
+      HydroNu's own client JS revealed data/point?x=&y= (SWEREF99 TM), and
+      that response's "stations" dict carries every nearby SUBID's own
+      position and upstream/downstream topology — enough to disambiguate by
+      area match rather than needing a human to read the map UI. See
+      scripts/scenario_lookup_subid.py and ASSUMPTIONS.md.
+    fetch_script: scripts/scenario_fetch_streamflow.py SUBID (run separately per inflow — outputs are NOT merged; --force bypasses the cache)
+    output_east_mainstem: web/data/scenario_streamflow_subid184.json (unscaled; S-HYPE upstreamArea=81.60 km2, mq=0.943, mlq=0.062, mhq=6.432 m3/s)
+    output_south_arm: web/data/scenario_streamflow_subid64474.json (unscaled; S-HYPE upstreamArea=59.65 km2, mq=0.667, mlq=0.035, mhq=4.787 m3/s)
+    aoi_corrected_outputs: >
+      scripts/scenario_correct_streamflow_for_aoi.py scales mq/mlq/mhq and
+      every coutHindcast/coutForecast value (NOT psim*, which is
+      precipitation mm, not flow) down by (S-HYPE area - AOI overlap) /
+      S-HYPE area, a linear area-proportional assumption stated explicitly
+      in that script's docstring and in ASSUMPTIONS.md. Outputs, kept
+      separate from the unscaled files above:
+      web/data/scenario_streamflow_subid184_aoi_corrected.json (factor
+      0.99126, mq -> 0.9346 m3/s) and
+      web/data/scenario_streamflow_subid64474_aoi_corrected.json (factor
+      0.99611, mq -> 0.6649 m3/s).
+    blocker_original_2026-09-17: >
+      The fetch endpoint works with no account, but the SUBID (SMHI's
+      S-HYPE subbasin ID) had no known scriptable lookup path — SVAR's WFS
+      keys catchments by ARO_UUID, not SUBID, and no crosswalk or
+      spatial-lookup API had been found as of 2026-09-17.
+    additional_limitation: >
+      This endpoint's flow series (coutHindcast/psimHindcast) is a rolling
+      ~30-day window ending at fetch time, not a historical archive — it
+      cannot return the November 2023 event flow directly. mq/mlq/mhq
+      (long-run mean/low/high, m3/s) are usable as a general baseflow
+      reference. For the actual November 2023 event, use the real gauge
+      observation instead — see inflow.observed_discharge_heakra below,
+      not this S-HYPE endpoint.
+
+  # Real observed daily discharge at the gauge nearest the model's west
+  # outflow (task: "the SVAR catchment 'Vid mätstation Hörbyån' implies a
+  # real gauge — find it"). No SMHI hydro-obs station is literally named
+  # Hörby/Hörbyån; HEÅKRA (station 2128) is the real, active gauge
+  # coincident with boundary_outflow above. See ASSUMPTIONS.md.
+  observed_discharge_heakra:
+    source: SMHI Hydrological Observations, Vattenföring (Dygn), station 2128 HEÅKRA
+    source_url: https://opendata-download-hydroobs.smhi.se/api/version/1.0/parameter/1/station/2128/period/corrected-archive/data.csv
+    license: CC BY 4.0 (smhi.se/data/om-smhis-data/villkor-for-anvandning)
+    period_of_record: 1973-05-23 to present (station active)
+    fetch_script: scripts/scenario_fetch_observed_discharge.py
+    output: web/data/scenario_observed_discharge_heakra.json, web/data/scenario_observed_discharge_heakra.csv
+    plausibility_check:
+      script: scripts/scenario_plausibility_check_station2128.py
+      long_term_mean_m3s: 1.8349
+      long_term_mean_specific_runoff_lspkm2: 12.499
+      nov_2023_specific_runoff_lspkm2: 48.851
+      ratio: 3.908
+      flag_threshold: 5.0
+      result: OK, not flagged
+      area_used_km2: 146.8  # SMHI's own stated drainage area for the station
+      area_cross_check_note: >
+        SMHI's 146.8 km2 vs SVAR AREA_UPSTREAM for the SAME point ("Vid
+        mätstation HEÅKRA"): 147.494 km2 (+0.47%, tight). vs SVAR
+        AREA_UPSTREAM for the anchor ("Vid mätstation Hörbyån", a
+        DIFFERENT, further-downstream point): 151.783 km2 (+3.39%,
+        expected to differ — not the same catchment).
+    baseflow_input:
+      script: scripts/scenario_compute_baseflow.py
+      nov_2023_wet_antecedent_m3s: 4.47   # median(1-15 Nov) — NOT the monthly mean
+      jan_2024_wet_antecedent_m3s: 3.19   # median(4-20 Jan) — NOT the monthly mean
+      method_note: >
+        Both are pre-event medians, not monthly means — the monthly means
+        (below) include each month's flood peak and were rejected as a
+        baseflow/initial-condition input. Nov: median(1-15 Nov), the
+        stable run of days before 16 Nov (already the rising limb ahead of
+        the 17-19 Nov flood). Jan: median(4-20 Jan), NOT median(1-15 Jan)
+        — days 1-3 are the recession tail of a DIFFERENT, earlier event,
+        and 21 Jan is already the rising limb ahead of the 22-27 Jan
+        flood; 4-20 is the actual stable window. See ASSUMPTIONS.md.
+    nov_2023_mean_m3s: 7.171   # CONTEXT ONLY — see context_note
+    jan_2024_mean_m3s: 8.295   # CONTEXT ONLY — see context_note
+    context_note: >
+      These are flood-inclusive monthly means, kept here as context only —
+      NOT used as the baseflow/model input (see baseflow_input above for
+      the actual input values). Nov 2023: daily discharge rises from ~3.7
+      to 24.1 m3/s on 17 Nov. Jan 2024: peaks at 27.8 m3/s on 24 Jan.
+
+manning_n:
+  source: Chow, V.T. (1959). Open-Channel Hydraulics — as tabulated in brief section 4.6
+  values:
+    channel: 0.035
+    sealed_surfaces: 0.015
+    grass_agricultural: 0.035
+    forest: 0.10
+
+terrain_conditioning:
+  source: brief section 4.5, stated directly, not independently sourced
+  channel_burn_depth_below_lidar_water_surface_m: 1.0
+  channel_bank_slope: "1:2"
+  culvert_width_ditch_m: 0.8
+  culvert_width_tributary_m: 1.5
+  main_river_crossings: treated as bridges (channel stays open)
+  building_obstruction_raise_m: 10
+  note: >
+    All of this needs the real 1 m DEM to apply (Phase 0 terrain blocker);
+    recorded here now so the values are traceable ahead of that work.

@@ -1,0 +1,340 @@
+{
+  "station": {
+    "id": 2128,
+    "name": "HEÅKRA",
+    "latitude": 55.8449,
+    "longitude": 13.635,
+    "owner": "SMHI",
+    "svar_catchment_match": "Vid mätstation HEÅKRA (ARO_UUID A5BE7041-2F1C-4F41-B7AA-7ED73F0659FE)",
+    "catchment_size_km2_smhi": 146.8,
+    "catchment_size_km2_svar_area_upstream": 147.494,
+    "period_of_record": {
+      "first_record": "1973-05-23",
+      "last_record": "2026-09-16",
+      "note": "From the fetched archive's own first/last rows; station status \"active\": true means ongoing at fetch time, not a fixed end date."
+    }
+  },
+  "parameter": "Vattenföring (Dygn) / discharge, daily mean",
+  "unit": "m3/s",
+  "source": "https://opendata-download-hydroobs.smhi.se/api/version/1.0/parameter/1/station/2128/period/corrected-archive/data.csv",
+  "retrieved_at": "2026-09-18T10:00:44.259810+00:00",
+  "license": "CC BY 4.0 (SMHI general open-data terms, smhi.se/data/om-smhis-data/villkor-for-anvandning)",
+  "archive_sha256": "11ad9456b2fc781e078fc4bb270a200b9b000b7d0e850f90672b98d783ae8131",
+  "quality_codes": {
+    "G": "Kontrollerade och godkända värden (checked and approved)"
+  },
+  "note": "No SMHI discharge station is literally named Hörby/Hörbyån (checked against the full 720-station list for parameter 1). HEÅKRA is the real gauge coincident with the model's west outflow boundary point -- see this script's module docstring.",
+  "first_record_date": "1973-05-23",
+  "last_record_date": "2026-09-16",
+  "nov_2023_mean_m3s": 7.1713,
+  "jan_2024_mean_m3s": 8.2948,
+  "nov_2023_records": [
+    {
+      "date": "2023-11-01",
+      "m3s": 13.4,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-02",
+      "m3s": 10.1,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-03",
+      "m3s": 8.04,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-04",
+      "m3s": 6.2,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-05",
+      "m3s": 4.58,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-06",
+      "m3s": 3.92,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-07",
+      "m3s": 3.63,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-08",
+      "m3s": 3.87,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-09",
+      "m3s": 4.47,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-10",
+      "m3s": 5.31,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-11",
+      "m3s": 4.61,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-12",
+      "m3s": 3.67,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-13",
+      "m3s": 3.04,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-14",
+      "m3s": 3.16,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-15",
+      "m3s": 3.65,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-16",
+      "m3s": 11.1,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-17",
+      "m3s": 24.1,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-18",
+      "m3s": 21.5,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-19",
+      "m3s": 16.9,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-20",
+      "m3s": 11.6,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-21",
+      "m3s": 7.71,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-22",
+      "m3s": 5.77,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-23",
+      "m3s": 6.6,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-24",
+      "m3s": 8.2,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-25",
+      "m3s": 6.28,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-26",
+      "m3s": 4.12,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-27",
+      "m3s": 3.06,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-28",
+      "m3s": 2.52,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-29",
+      "m3s": 2.12,
+      "quality": "G"
+    },
+    {
+      "date": "2023-11-30",
+      "m3s": 1.91,
+      "quality": "G"
+    }
+  ],
+  "jan_2024_records": [
+    {
+      "date": "2024-01-01",
+      "m3s": 9.9,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-02",
+      "m3s": 10.8,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-03",
+      "m3s": 7.65,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-04",
+      "m3s": 3.94,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-05",
+      "m3s": 3.76,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-06",
+      "m3s": 3.62,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-07",
+      "m3s": 3.47,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-08",
+      "m3s": 3.33,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-09",
+      "m3s": 3.19,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-10",
+      "m3s": 3.01,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-11",
+      "m3s": 2.82,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-12",
+      "m3s": 2.58,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-13",
+      "m3s": 2.67,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-14",
+      "m3s": 4.1,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-15",
+      "m3s": 4.27,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-16",
+      "m3s": 3.45,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-17",
+      "m3s": 3.08,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-18",
+      "m3s": 2.76,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-19",
+      "m3s": 2.36,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-20",
+      "m3s": 3.16,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-21",
+      "m3s": 4.74,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-22",
+      "m3s": 10.0,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-23",
+      "m3s": 20.3,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-24",
+      "m3s": 27.8,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-25",
+      "m3s": 27.5,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-26",
+      "m3s": 23.0,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-27",
+      "m3s": 19.5,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-28",
+      "m3s": 14.9,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-29",
+      "m3s": 10.6,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-30",
+      "m3s": 8.04,
+      "quality": "G"
+    },
+    {
+      "date": "2024-01-31",
+      "m3s": 6.84,
+      "quality": "G"
+    }
+  ]
+}

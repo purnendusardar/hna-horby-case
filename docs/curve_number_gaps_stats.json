@@ -1,0 +1,88 @@
+{
+  "grid_size": {
+    "width": 287,
+    "height": 273
+  },
+  "cell_counts_by_reason_code": {
+    "K": 55306,
+    "S": 22446,
+    "W": 538,
+    "V": 61
+  },
+  "legend": {
+    "K": "resolved (CN assigned)",
+    "S": "sealed (deliberate exclusion)",
+    "W": "water (deliberate exclusion)",
+    "N": "no soil polygon match at all (coverage gap)",
+    "V": "matched a 'Vatten' soil polygon under pervious NMD land (dataset disagreement)",
+    "U": "NMD class not in NMD_TO_TR55 mapping"
+  },
+  "clustering": {
+    "S": {
+      "total_cells": 22446,
+      "num_components": 628,
+      "largest_component": 20758,
+      "top5_components": [
+        20758,
+        176,
+        138,
+        122,
+        33
+      ],
+      "pct_of_cells_in_largest_component": 92.5,
+      "pct_of_components_that_are_singleton_cells": 60.2,
+      "pattern": "CLUSTERED"
+    },
+    "W": {
+      "total_cells": 538,
+      "num_components": 79,
+      "largest_component": 195,
+      "top5_components": [
+        195,
+        39,
+        22,
+        22,
+        18
+      ],
+      "pct_of_cells_in_largest_component": 36.2,
+      "pct_of_components_that_are_singleton_cells": 36.7,
+      "pattern": "MIXED"
+    },
+    "V": {
+      "total_cells": 61,
+      "num_components": 29,
+      "largest_component": 9,
+      "top5_components": [
+        9,
+        7,
+        6,
+        6,
+        3
+      ],
+      "pct_of_cells_in_largest_component": 14.8,
+      "pct_of_components_that_are_singleton_cells": 65.5,
+      "pattern": "SCATTERED"
+    }
+  },
+  "nmd_class_breakdown_of_gap_cells": {
+    "V": {
+      "4233 (Frisk-fuktig gräsdominerad mark)": 11,
+      "225 (Gräsdominerad våtmark, högvuxen)": 11,
+      "115 (Triviallövskog på fastmark)": 11,
+      "116 (Ädellövskog på fastmark)": 8,
+      "4223 (Frisk-fuktig risdominerad mark)": 3,
+      "111 (Tallskog på fastmark)": 3,
+      "224 (Gräsdominerad våtmark, frodvuxen)": 2,
+      "4232 (Frisk gräsdominerad mark)": 2,
+      "117 (Triviallövskog med ädellövinslag på fastmark)": 2,
+      "4222 (Frisk risdominerad mark)": 2,
+      "3 (Åkermark)": 2,
+      "200 (Öppen våtmark (underindelning saknas))": 1,
+      "227 (Våtmark utan växttäcke)": 1,
+      "125 (Triviallövskog på våtmark)": 1,
+      "114 (Lövblandad barrskog på fastmark)": 1
+    }
+  },
+  "map_image": "docs/curve_number_gaps.png",
+  "map_scale": "4x nearest-neighbour upscale from native ~10 m cells"
+}

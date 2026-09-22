@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HNA · Hörby scenario explorer (illustrative)</title><meta name="description" content="Illustrative rainfall scenarios for Hörby: modelled maximum flood depth for design storms, with all assumed values listed. Not a flood hazard map."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b3446'/%3E%3Cpath d='M7 23L12 11M14 23L20 6M21 23L26 12' stroke='%233ed2c7' stroke-width='4'/%3E%3C/svg%3E"><link rel="stylesheet" href="../vendor/cesium/Widgets/widgets.css"><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="banner" role="note">Illustrative scenario · drainage, culvert and river parameters are assumed · not a flood hazard map</div>
+<header><a class="brand" href="../"><span class="brand-icon">≋</span><span>HNA<small>Hydro Nexus Analytics</small></span></a><div class="heading"><span class="eyebrow">SKÅNE · SCENARIO EXPLORER</span><h1>Hörby: illustrative rainfall scenarios</h1></div><a class="button-link" href="../">← Case 01, the evidence explorer</a></header>
+<main class="scenario">
+<aside class="left">
+<span class="eyebrow">RAINFALL SCENARIO</span>
+<h2>Design storm</h2>
+<label class="range" for="storm">Storm total <output id="storm-value">70 mm</output></label>
+<input id="storm" type="range" min="0" max="2" step="1" value="1" aria-describedby="storm-note">
+<ol class="ticks" id="storm-ticks" aria-hidden="true"><li data-mm="40"><b>40 mm</b><small>loading…</small></li><li data-mm="70"><b>70 mm</b><small>loading…</small></li><li data-mm="100"><b>100 mm</b><small>loading…</small></li></ol>
+<p class="fine" id="storm-note" role="status">Only scenarios whose model run has finished can be selected.</p>
+<section class="headline" id="headline" aria-live="polite"><span class="eyebrow">HEADLINE</span><p class="fine">Loading scenario results…</p></section>
+<h3>Map layers</h3>
+<label class="check"><input type="checkbox" id="toggle-depth" checked> Maximum water depth over the run</label>
+<label class="check"><input type="checkbox" id="toggle-buildings" checked> Buildings (extruded, assumed heights)</label>
+<label class="range" for="exaggeration">Vertical exaggeration <output id="exaggeration-value">2.0×</output></label>
+<input id="exaggeration" type="range" min="2" max="3" step="0.5" value="2">
+<p class="fine">Applied to terrain, relative to the valley floor, so Hörby's valley reads clearly. Water depths are not exaggerated.</p>
+<div class="status-box"><span class="eyebrow">MORE</span><p><a href="../ASSUMPTIONS.md">ASSUMPTIONS.md</a> records every assumed value with its source; <a href="../scenarios.yaml">scenarios.yaml</a> holds the configuration.</p></div>
+</aside>
+<section class="workspace"><div class="mapbar"><span>Hörby, Sweden <small id="terrain-status">Loading map…</small></span><div class="mapbuttons"><button id="view3d" aria-pressed="true">3D</button><button id="view2d" aria-pressed="false">Top down</button><button id="reset">Reset view</button><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button></div></div>
+<div class="mapwrap"><div id="map" aria-label="Interactive 3D map of Hörby with modelled maximum flood depth"></div><div id="map-error" class="map-error" hidden></div>
+<div class="depth-legend" id="depth-legend" aria-label="Water depth legend"><strong>Max depth</strong><ul id="legend-list"></ul><small>Below 0.05 m: not shown. Classes are project-defined display intervals.</small></div></div>
+<p class="fine" id="data-status">Loading…</p></section>
+<aside class="right">
+<span class="eyebrow">REPORTING LOCATIONS</span>
+<h2>Where the water gets to</h2>
+<ul class="loc-list" id="locations"><li class="fine">Loading…</li></ul>
+<p class="fine">90th percentile of street-surface depth and the share of each footprint deeper than 0.05 m, over the run — the river channel and raised building cells are excluded (project-defined statistics; see the assumptions below). Skattkistans förskola is geocoded from the operator's own address, Ågatan 2B.</p>
+<details open id="assumptions"><summary>Assumed values behind this scenario</summary><ul class="assumed" id="assumed-list"></ul></details>
+</aside>
+</main>
+<footer class="credits" id="credits"><h2>Credits and licences</h2><ul>
+<li><strong>Terrain data:</strong> Markhöjdmodell Nedladdning © <a href="https://www.lantmateriet.se/" target="_blank" rel="noopener">Lantmäteriet</a> (processed by HNA: mosaicked, clipped, conditioned, resampled), <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</li>
+<li><strong>Buildings, roads, waterways:</strong> © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>, <a href="https://opendatacommons.org/licenses/odbl/" target="_blank" rel="noopener">ODbL 1.0</a>. Building heights are assumed, not measured.</li>
+<li><strong>Flow and catchments:</strong> <a href="https://www.smhi.se/" target="_blank" rel="noopener">SMHI</a> (S-HYPE, SVAR subcatchments), CC BY 4.0.</li>
+<li><strong>Soils:</strong> <a href="https://www.sgu.se/" target="_blank" rel="noopener">Geological Survey of Sweden (SGU)</a>, CC0 (credit given as a courtesy).</li>
+<li><strong>Land cover:</strong> Nationella marktäckedata (NMD) © <a href="https://www.naturvardsverket.se/" target="_blank" rel="noopener">Naturvårdsverket</a>, CC0 (credit given as a courtesy).</li>
+<li><strong>Display terrain (placeholder):</strong> Esri World Elevation, streamed in the map; not used in any model result.</li>
+<li><strong>Not credited here:</strong> Copernicus DEM GLO-30 was used only for an internal sanity check; no published output derives from it, so its attribution is not required on this page.</li>
+<li><strong>Model:</strong> LISFLOOD-FP 8 (University of Bristol), run by HNA at 5 m resolution.</li></ul></footer>
+<script>window.CESIUM_BASE_URL='../vendor/cesium/';</script><script src="../vendor/cesium/Cesium.js"></script><script type="module" src="app.js"></script></body></html>
