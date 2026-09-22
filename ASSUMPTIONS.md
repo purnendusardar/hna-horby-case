@@ -1841,7 +1841,16 @@ of gap as the AOI-scale calculation, not investigated further.
 **Longest flow path and mean slope** (`scripts/scenario_catchment_flowpath.py`, Copernicus GLO-30 at
 native ~30 m, reprojected EPSG:4326→EPSG:3006, priority-flood fill, D8, flow-length-to-catchment-exit
 by a single ascending-elevation topological pass): east 17,818 m / 6.16% mean slope; south 19,359 m
-/ 4.27%. **Cross-check: the D8-derived catchment exit point lands 50 m (east) and 95 m (south) from
+/ 4.27%. **This GLO-30-derived flow-path length and slope feed the NRCS lag equation below, which
+sets the time-to-peak of the published inflow hydrographs (§2's `hydrograph_{40,70,100}mm.bdy`,
+used in the final published model runs) — so, corrected 2026-09-22: this IS a case of a published
+output deriving from Copernicus DEM GLO-30, contradicting an earlier "not credited, no published
+output derives from it" note that was written for a different, genuinely-unpublished use (the
+GLO-30 DEM-placeholder pipeline-validation runs, `pipelinetest_*`, described further up this file —
+that one really is internal-only). The website's credits block, this file, and README.md were all
+corrected accordingly; the required Copernicus attribution string is given where the DEM-placeholder
+use is discussed above ("Required attribution", Article 6(b) of the COP-DEM-GLO-30-F licence) and is
+now also carried on the live site.** Cross-check: the D8-derived catchment exit point lands 50 m (east) and 95 m (south) from
 the actual boundary-inflow lat/lon in `scenarios.yaml`** — one to three 30 m pixels, strong
 independent confirmation that the SVAR catchment delineation and the GLO-30 terrain agree.
 
@@ -2328,3 +2337,15 @@ buildings narrower than one cell are closed, so rows of buildings can block flow
 in reality, and water can pond against them." (`web/scenarios/app.js`, "Buildings" row.)
 
 Full per-offset data: `data/scenario/derived/boundary_profile_diagnosis.json`.
+
+## Deployed to production — 2026-09-22
+
+Commit `b718c24deaa29876f229579f582161a9c51833a4` pushed directly to `main` of
+`purnendusardar/hna-horby-case` (no branch-protection rule found, confirmed by the push itself
+succeeding). GitHub Actions run 35716807110 succeeded; live site verified in a real browser with
+zero console errors on both Case 01 and the scenario page. Terrain-on gate passed at the default 2x
+exaggeration (real Esri relief, buildings correctly seated, depth/river layers draped, camera reset
+frames the town) — see `docs/release_screenshots/terrain_on_70mm.png`. Full execution record,
+including the authentication/branch-protection method used in place of `gh` (not installed) and one
+flagged pre-existing diff to Case 01's `web/app.js`: `docs/RELEASE_REPORT.md` -> "Deploy execution
+record." Rollback target: `4417ef7997c81fc59944672217db47b9f11039d1`.

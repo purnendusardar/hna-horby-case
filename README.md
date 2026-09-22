@@ -73,6 +73,7 @@ Esri terrain is visualization context, not an acquired Copernicus GLO-30 DEM or 
 - OpenStreetMap contributors: https://www.openstreetmap.org/copyright, ODbL 1.0. The extracted reference database and query are included in `geography.geojson`. Current extraction date is recorded there. Standard tiles are loaded on demand; no bulk tile download or offline tile cache is included. Tile use policy: https://operations.osmfoundation.org/policies/tiles/.
 - `web/data/scenario_buildings.geojson` (2,740 building footprints, extruded on the scenario explorer map) is likewise derived from OpenStreetMap: © OpenStreetMap contributors, ODbL 1.0. Building heights in it are assumed (OSM `height`/`building:levels` tags where present, otherwise a default by building type), not measured — see `ASSUMPTIONS.md`.
 - Terrain: Esri World Elevation, streamed from https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer. Source attribution is rendered by Cesium; service availability and usage terms apply. No terrain tiles are redistributed.
+- Copernicus DEM GLO-30 (used for the scenario explorer's catchment flow-path length and slope, which feed the published inflow hydrographs' time-to-peak — see `ASSUMPTIONS.md`): produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.
 - CesiumJS 1.133.0: Apache-2.0. Its bundled license/third-party notices are retained in `dist/vendor/cesium`.
 
 ## Three-minute Hörby walkthrough
